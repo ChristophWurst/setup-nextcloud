@@ -8,6 +8,7 @@ Set up a Nextcloud environment. Batteries included, but removable.
 * **Optional** `install`: Run Nextcloud installation? Default `'false'`.
 * **Optional** `database`: Database system to use for installation. `mysql` and `postgres` expect a running database running at 127.0.0.1 with database name, username and password set to `nextcloud`. Default `sqlite`.
 * **Optional** `node-version` Node.js version to set up, if any. Default `16`. Pass `false` to skip Node.js installation.
+* **Optional** `npm-version` npm version override. Default `default`, uses the default npm that comes with the specified node.
 * **Optional** `php-version` PHP version to set up. Default `8.1`. Pass `false` to skip PHP installation.
 * **Optional** `php-coverage` PHP coverage support, e.g. `xdebug`. Default `false`.
 * **Optional** `patch-php-version-check` Remove Nextcloud version check to allow nightly PHP versions. Default `false`.
@@ -25,7 +26,7 @@ These tests only need the Nextcloud code and PHP.
     name: Unit tests
     steps:
       - name: Set up Nextcloud env
-        uses: ChristophWurst/setup-nextcloud@v0.3.0
+        uses: ChristophWurst/setup-nextcloud@v0.3.1
         with:
           nextcloud-version: stable25
           php-version: '8.2'
@@ -50,7 +51,7 @@ These tests need an *installed* Nextcloud and PHP.
     name: Unit tests
     steps:
       - name: Set up Nextcloud env
-        uses: ChristophWurst/setup-nextcloud@v0.3.0
+        uses: ChristophWurst/setup-nextcloud@v0.3.1
         with:
           nextcloud-version: stable25
           php-version: '8.1'
@@ -77,7 +78,7 @@ These tests need an *installed* Nextcloud and PHP.
     name: Unit tests
     steps:
       - name: Set up Nextcloud env
-        uses: ChristophWurst/setup-nextcloud@v0.3.0
+        uses: ChristophWurst/setup-nextcloud@v0.3.1
         with:
           nextcloud-version: stable25
           php-version: '8.1'
