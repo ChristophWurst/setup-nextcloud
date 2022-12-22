@@ -30,6 +30,7 @@ jobs:
         with:
           nextcloud-version: stable25
           node-version: 18
+          npm-version: 8
           php-version: '8.0'
       - name: Test node env
         run: |

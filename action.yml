@@ -20,6 +20,10 @@ inputs:
     description: 'Node.js version to set up'
     required: false
     default: '16'
+  npm-version:
+    description: 'npm version override'
+    required: false
+    default: 'default'
   php-version:
     description: 'PHP version to set up'
     required: false
@@ -47,6 +51,10 @@ runs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}
+    - name: Set up npm ${{ inputs.npm-version }}
+      if: ${{ inputs.npm-version != 'default' }}
+      shell: bash
+      run: npm i -g npm@"${{ inputs.npm-version }}"
     - name: Set up php${{ inputs.php-version }}
       if: ${{ inputs.php-version != 'false' }}
       uses: shivammathur/setup-php@v2
