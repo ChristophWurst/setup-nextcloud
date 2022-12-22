@@ -21,6 +21,10 @@ inputs:
     description: 'PHP coverage support'
     required: false
     default: 'none'
+  tools:
+    description: 'Optional tools to install separated by space. Available: krankerl'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -37,6 +41,12 @@ runs:
         php-version: ${{ inputs.php-version }}
         extensions: ctype,curl,dom,gd,iconv,intl,json,mbstring,openssl,posix,sqlite,xml,zip,gmp
         coverage: ${{ inputs.php-coverage }}
+    - name: Install krankerl
+      if: ${{ contains(inputs.tools, 'krankerl') }}
+      shell: bash
+      run: |
+        wget https://github.com/ChristophWurst/krankerl/releases/download/v0.13.0/krankerl_0.13.0_amd64.deb
+        sudo dpkg -i krankerl_0.13.0_amd64.deb
     - name: Install Nextcloud
       if: ${{ inputs.install == 'true' }}
       shell: bash
