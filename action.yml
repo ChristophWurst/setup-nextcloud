@@ -12,6 +12,10 @@ inputs:
     description: 'Run Nextcloud installation? Skip if you only need the code, not a process'
     required: false
     default: 'false'
+  database:
+    description: 'Database system to use for installation'
+    required: false
+    default: 'sqlite'
   node-version:
     description: 'Node.js version to set up'
     required: false
@@ -63,4 +67,11 @@ runs:
     - name: Install Nextcloud
       if: ${{ inputs.install == 'true' }}
       shell: bash
-      run: php -f nextcloud/occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database sqlite --database-pass=''
+      run: php -f nextcloud/occ maintenance:install
+        --database-host 127.0.0.1
+        --database-name nextcloud
+        --database-user nextcloud
+        --database-pass nextcloud
+        --admin-user admin
+        --admin-pass admin
+        --database ${{ inputs.database }}

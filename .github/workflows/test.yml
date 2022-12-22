@@ -83,6 +83,35 @@ jobs:
       - name: Test PHP
         run: php --version
 
+  test-mysql:
+    runs-on: ubuntu-latest
+    name: Test MySQL
+    services:
+      mysql-service:
+          image: mariadb:10.6
+          env:
+              MYSQL_ROOT_PASSWORD: my-secret-pw
+              MYSQL_DATABASE: nextcloud
+              MYSQL_USER: nextcloud
+              MYSQL_PASSWORD: nextcloud
+          ports:
+              - 3306:3306
+          options: >-
+              --health-cmd="mysqladmin ping"
+              --health-interval=10s
+              --health-timeout=5s
+              --health-retries=3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: "./"
+      - name: Set up Nextcloud env
+        uses: ./
+        with:
+          install: true
+          database: 'mysql'
+
   summary:
     name: Tests
     runs-on: ubuntu-latest
@@ -92,6 +121,7 @@ jobs:
       - test-installation
       - test-krankerl
       - test-nightly-php
+      - test-mysql
     if: always()
     steps:
       - name: Installation test status
@@ -104,3 +134,5 @@ jobs:
         run: if ${{ needs.test-krankerl.result != 'success' && needs.test-krankerl.result != 'skipped' }}; then exit 1; fi
       - name: Nightly PHP test status
         run: if ${{ needs.test-nightly-php.result != 'success' && needs.test-nightly-php.result != 'skipped' }}; then exit 1; fi
+      - name: MySQL test status
+        run: if ${{ needs.test-mysql.result != 'success' && needs.test-mysql.result != 'skipped' }}; then exit 1; fi

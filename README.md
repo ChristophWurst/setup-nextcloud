@@ -6,6 +6,7 @@ Set up a Nextcloud environment. Batteries included, but removable.
 
 * **Optional** ``nextcloud-version``: Version tag or branch name to set up. Default `master`.
 * **Optional** `install`: Run Nextcloud installation? Default `'false'`.
+* **Optional** `database`: Database system to use for installation. `mysql` and `postgres` expect a running database running at 127.0.0.1 with database name, username and password set to `nextcloud`. Default `sqlite`.
 * **Optional** `node-version` Node.js version to set up, if any. Default `16`. Pass `false` to skip Node.js installation.
 * **Optional** `php-version` PHP version to set up. Default `8.1`. Pass `false` to skip PHP installation.
 * **Optional** `php-coverage` PHP coverage support, e.g. `xdebug`. Default `false`.
