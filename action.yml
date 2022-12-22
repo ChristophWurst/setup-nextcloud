@@ -44,7 +44,7 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
     - name: Set up php${{ inputs.php-version }}
-      if: ${{ inputs.install != 'false' }}
+      if: ${{ inputs.php-version != 'false' }}
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ inputs.php-version }}
