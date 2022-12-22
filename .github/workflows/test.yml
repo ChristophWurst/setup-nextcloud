@@ -1,0 +1,34 @@
+name: Test the action
+on: pull_request
+
+jobs:
+  test-simple-setup:
+    runs-on: ubuntu-latest
+    name: Test simple setup
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: "./"
+      - name: Set up Nextcloud env
+        uses: ./
+        with:
+          nextcloud-version: stable25
+          node-version: 18
+          php-version: '8.0'
+      - name: Test node env
+        run: |
+          node --version
+          npm --version
+      - name: Test php env
+        run: php --version
+
+  summary:
+    name: Tests
+    runs-on: ubuntu-latest
+    needs:
+      - test-simple-setup
+    if: always()
+    steps:
+      - name: Unit test status
+        run: if ${{ needs.test-simple-setup.result != 'success' && needs.test-simple-setup.result != 'skipped' }}; then exit 1; fi

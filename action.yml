@@ -1,0 +1,35 @@
+name: 'Set up Nextcloud'
+description: 'Set up a Nextcloud environment'
+inputs:
+  nextcloud-version:
+    description: 'Version tag or branch name to set up'
+    required: false
+    default: 'master'
+  node-version:
+    description: 'Node.js version to set up'
+    required: false
+    default: '16'
+  php-version:
+    description: 'PHP version to set up'
+    required: false
+    default: '8.1'
+  php-coverage:
+    description: 'PHP coverage support'
+    required: false
+    default: 'none'
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Nextcloud
+      shell: bash
+      run: git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b ${{ inputs.nextcloud-version }} nextcloud
+    - name: Set up Node.js ${{ inputs.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+    - name: Set up php${{ inputs.php-version }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+        extensions: ctype,curl,dom,gd,iconv,intl,json,mbstring,openssl,posix,sqlite,xml,zip,gmp
+        coverage: ${{ inputs.php-coverage }}
