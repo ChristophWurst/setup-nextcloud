@@ -37,6 +37,20 @@ jobs:
           install: true
       - name: Test occ
         run: php -f nextcloud/occ config:list
+  test-krankerl:
+    runs-on: ubuntu-latest
+    name: Test krankerl
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: "./"
+      - name: Set up Nextcloud env
+        uses: ./
+        with:
+          tools: 'krankerl'
+      - name: Test krankerl
+        run: krankerl --version
 
   summary:
     name: Tests
@@ -44,9 +58,12 @@ jobs:
     needs:
       - test-simple-setup
       - test-installation
+      - test-krankerl
     if: always()
     steps:
       - name: Simple test status
         run: if ${{ needs.test-simple-setup.result != 'success' && needs.test-simple-setup.result != 'skipped' }}; then exit 1; fi
       - name: Installation test status
         run: if ${{ needs.test-installation.result != 'success' && needs.test-installation.result != 'skipped' }}; then exit 1; fi
+      - name: Krankerl test status
+        run: if ${{ needs.test-krankerl.result != 'success' && needs.test-krankerl.result != 'skipped' }}; then exit 1; fi
