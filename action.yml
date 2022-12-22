@@ -5,6 +5,10 @@ inputs:
     description: 'Version tag or branch name to set up'
     required: false
     default: 'master'
+  install:
+    description: 'Run Nextcloud installation? Skip if you only need the code, not a process'
+    required: false
+    default: 'false'
   node-version:
     description: 'Node.js version to set up'
     required: false
@@ -33,3 +37,7 @@ runs:
         php-version: ${{ inputs.php-version }}
         extensions: ctype,curl,dom,gd,iconv,intl,json,mbstring,openssl,posix,sqlite,xml,zip,gmp
         coverage: ${{ inputs.php-coverage }}
+    - name: Install Nextcloud
+      if: ${{ inputs.install == 'true' }}
+      shell: bash
+      run: php -f nextcloud/occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database sqlite --database-pass=''
