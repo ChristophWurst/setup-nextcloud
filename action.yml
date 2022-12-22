@@ -35,7 +35,7 @@ runs:
       shell: bash
       run: git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b ${{ inputs.nextcloud-version }} nextcloud
     - name: Set up Node.js ${{ inputs.node-version }}
-      if: ${{ inputs.install != 'false' }}
+      if: ${{ inputs.node-version != 'false' }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}
