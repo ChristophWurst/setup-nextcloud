@@ -24,6 +24,10 @@ inputs:
     description: 'PHP coverage support'
     required: false
     default: 'none'
+  patch-php-version-check:
+    description: 'Remove Nextcloud version check to allow nightly PHP versions'
+    required: false
+    default: 'false'
   tools:
     description: 'Optional tools to install separated by space. Available: krankerl'
     required: false
@@ -52,6 +56,10 @@ runs:
       run: |
         wget https://github.com/ChristophWurst/krankerl/releases/download/v0.13.0/krankerl_0.13.0_amd64.deb
         sudo dpkg -i krankerl_0.13.0_amd64.deb
+    - name: Patch out Nextcloud's version check
+      shell: bash
+      if: ${{ inputs.patch-php-version-check == 'true' }}
+      run: echo "<?php" > nextcloud/lib/versioncheck.php
     - name: Install Nextcloud
       if: ${{ inputs.install == 'true' }}
       shell: bash

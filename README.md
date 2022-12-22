@@ -9,6 +9,7 @@ Set up a Nextcloud environment. Batteries included, but removable.
 * **Optional** `node-version` Node.js version to set up, if any. Default `16`. Pass `false` to skip Node.js installation.
 * **Optional** `php-version` PHP version to set up. Default `8.1`. Pass `false` to skip PHP installation.
 * **Optional** `php-coverage` PHP coverage support, e.g. `xdebug`. Default `false`.
+* **Optional** `patch-php-version-check` Remove Nextcloud version check to allow nightly PHP versions. Default `false`.
 * **Optional** `tools` Additional tools to install separated by space. Available: `krankerl`. Default `''` (no tools).
 
 ## Usage
