@@ -1,5 +1,8 @@
 name: 'Set up Nextcloud'
 description: 'Set up a Nextcloud environment'
+branding:
+  icon: 'cloud'
+  color: 'blue'
 inputs:
   nextcloud-version:
     description: 'Version tag or branch name to set up'
