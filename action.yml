@@ -62,6 +62,9 @@ runs:
         php-version: ${{ inputs.php-version }}
         extensions: ctype,curl,dom,gd,iconv,intl,json,mbstring,openssl,posix,sqlite,xml,zip,gmp
         coverage: ${{ inputs.php-coverage }}
+        ini-file: development
+        ini-values:
+          disable_functions= # https://github.com/shivammathur/setup-php/discussions/573
     - name: Install krankerl
       if: ${{ contains(inputs.tools, 'krankerl') }}
       shell: bash
